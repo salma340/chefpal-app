@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/auth_nav_graph"
+    app:startDestination="@id/splash_fragment">
+
+    <fragment
+        android:id="@id/splash_fragment"
+        android:name="com.iti.myapplicationbnv.SplashFragment"
+        android:label="Splash"/>
+
+    <fragment
+        android:id="@id/login_fragment"
+        android:name="com.iti.myapplicationbnv.LoginFragment"
+        android:label="Login"/>
+
+    <fragment
+        android:id="@id/signup_fragment"
+        android:name="com.iti.myapplicationbnv.SignupFragment"
+        android:label="Sign Up"/>
+
+
+    <fragment
+        android:id="@id/register_fragment"
+        android:name="com.iti.myapplicationbnv.RegisterFragment"
+        android:label="Register" >
+
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/login_fragment" />
+
+        <action
+            android:id="@+id/action_registerFragment_to_signupFragment"
+            app:destination="@id/signup_fragment" />
+    </fragment>
+
+
+</navigation>

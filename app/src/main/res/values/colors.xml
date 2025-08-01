@@ -11,4 +11,7 @@
     <color name="your_toolbar_icon_color">#FFFFFF</color>
     <color name="your_menu_item_text_color">#AB0F0F</color>
 
+    <color name="background">#FFF3EB</color>
+    <color name="orange">#F16701</color>
+    <color name="blue">#0370D0</color>
 </resources>

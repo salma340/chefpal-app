@@ -16,36 +16,15 @@
         android:theme="@style/Theme.MyApplicationBNV"
         tools:targetApi="31">
         <activity
-            android:name=".final_project.MainActivity4"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".lec_8_9.MainActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".lec_10.AddColorActivity"
-            android:exported="false" />
-        <activity
-            android:name=".lec_10.ColorDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".lec_10.ColorListActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".MainActivity"
-            android:exported="false"
-            android:label="@string/app_name"></activity>
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
