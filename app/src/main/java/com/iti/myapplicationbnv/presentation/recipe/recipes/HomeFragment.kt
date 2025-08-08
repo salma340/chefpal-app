@@ -75,7 +75,9 @@ class HomeFragment : Fragment() {
                     mealName = meal.name,
                     mealImageUrl = meal.imageUrl,
                     mealInstructions = meal.instructions,
+                    mealCategory = meal.category,
                     mealYoutubeUrl = meal.youtubeUrl ?: ""
+
 
                 )
             findNavController().navigate(action)

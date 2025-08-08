@@ -40,6 +40,7 @@ class RecipeDetailFragment : Fragment() {
         bind.mealTitle.text = args.mealName
         bind.mealInstructions.text = args.mealInstructions
 
+
         Glide.with(requireContext())
             .load(args.mealImageUrl)
             .into(bind.mealImage)
@@ -87,7 +88,7 @@ class RecipeDetailFragment : Fragment() {
                             name = args.mealName,
                             imageUrl = args.mealImageUrl ?: "",
                             instructions = args.mealInstructions,
-                            category = ""
+                            category =args.mealCategory
                         )
                     )
                     bind.btnFavorite.setImageResource(R.drawable.star_filled)
