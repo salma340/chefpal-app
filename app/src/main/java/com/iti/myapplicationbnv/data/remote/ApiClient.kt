@@ -1,6 +1,6 @@
-package com.iti.myapplicationbnv.api
+package com.iti.myapplicationbnv.data.remote
 
-import com.iti.myapplicationbnv.api.MealApiService
+import com.iti.myapplicationbnv.data.remote.MealApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

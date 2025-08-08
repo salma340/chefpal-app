@@ -1,4 +1,4 @@
-package com.iti.myapplicationbnv.adapter
+package com.iti.myapplicationbnv.presentation.recipe.favorite
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

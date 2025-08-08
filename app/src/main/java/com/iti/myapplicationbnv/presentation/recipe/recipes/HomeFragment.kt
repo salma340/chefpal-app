@@ -1,4 +1,4 @@
-package com.iti.myapplicationbnv
+package com.iti.myapplicationbnv.presentation.recipe.recipes
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,25 +11,26 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.iti.myapplicationbnv.R
 import com.iti.myapplicationbnv.data.data.local.FavoriteMealDao
+import com.iti.myapplicationbnv.data.data.sharedpref.sharedpreferences
 import com.iti.myapplicationbnv.data.local.AppDatabase
+import com.iti.myapplicationbnv.data.remote.ApiClient
+import com.iti.myapplicationbnv.data.remote.MealResponse
+import com.iti.myapplicationbnv.presentation.auth.AuthActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import androidx.core.view.MenuProvider
-import com.iti.myapplicationbnv.activity.AuthActivity
-import com.iti.myapplicationbnv.adapter.MealAdapter
-import com.iti.myapplicationbnv.api.ApiClient
-import com.iti.myapplicationbnv.api.MealResponse
-import com.iti.myapplicationbnv.data.data.sharedpref.sharedpreferences
-
 
 class HomeFragment : Fragment() {
 
@@ -38,6 +39,11 @@ class HomeFragment : Fragment() {
     private lateinit var searchBar: EditText
     private lateinit var dao: FavoriteMealDao
     private var lastQuery: String = ""
+
+    private lateinit var placeholderText: TextView
+
+    private lateinit var progressBar: ProgressBar
+
     private var favoriteIds: List<String> = emptyList()
 
     override fun onCreateView(
@@ -47,20 +53,30 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+
+
         recyclerView = view.findViewById(R.id.mealRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
+        placeholderText = view.findViewById(R.id.placeholderText)
+
+
         searchBar = view.findViewById(R.id.search_bar)
 
-        val db = AppDatabase.getInstance(requireContext())
+        progressBar = view.findViewById(R.id.progressBar)
+
+        val db = AppDatabase.Companion.getInstance(requireContext())
         dao = db.favoriteMealDao()
 
         mealAdapter = MealAdapter(emptyList(), onItemClick = { meal ->
             val action = HomeFragmentDirections
                 .actionHomeFragmentToRecipeDetailFragment(
+                    mealId = meal.id,
                     mealName = meal.name,
                     mealImageUrl = meal.imageUrl,
-                    mealInstructions = meal.instructions
+                    mealInstructions = meal.instructions,
+                    mealYoutubeUrl = meal.youtubeUrl ?: ""
+
                 )
             findNavController().navigate(action)
         }, dao = dao)
@@ -70,7 +86,7 @@ class HomeFragment : Fragment() {
 
         dao.getAll().observe(viewLifecycleOwner) { favoriteMeals ->
             favoriteIds = favoriteMeals.map { it.id }
-            fetchMeals(lastQuery)
+            mealAdapter.updateFavorites(favoriteIds)
         }
 
 
@@ -128,12 +144,20 @@ class HomeFragment : Fragment() {
 
 
     private fun fetchMeals(query: String) {
+        if (query.isEmpty()) {
+            progressBar.visibility = View.VISIBLE
+        } else {
+            progressBar.visibility = View.GONE
+        }
+
         ApiClient.apiService.searchMeals(query)
             .enqueue(object : Callback<MealResponse> {
                 override fun onResponse(
                     call: Call<MealResponse>,
                     response: Response<MealResponse>
                 ) {
+
+                    progressBar.visibility = View.GONE
                     if (response.isSuccessful) {
                         val meals = response.body()?.meals ?: emptyList()
 
@@ -141,10 +165,13 @@ class HomeFragment : Fragment() {
                             meal.isFavorite = favoriteIds.contains(meal.id)
                         }
                         mealAdapter.updateData(meals)
+
+                        placeholderText.visibility = if (meals.isEmpty()) View.VISIBLE else View.GONE
                     }
                 }
 
                 override fun onFailure(call: Call<MealResponse>, t: Throwable) {
+                    progressBar.visibility = View.GONE
                     Toast.makeText(context, "Failed to load meals", Toast.LENGTH_SHORT).show()
                 }
             })

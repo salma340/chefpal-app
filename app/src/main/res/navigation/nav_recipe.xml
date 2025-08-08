@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/home_fragment"
-        android:name="com.iti.myapplicationbnv.HomeFragment"
+        android:name="com.iti.myapplicationbnv.presentation.recipe.recipes.HomeFragment"
         android:label="Home">
         <action
             android:id="@+id/action_homeFragment_to_recipeDetailFragment"
@@ -22,29 +22,52 @@
 
     <fragment
         android:id="@+id/fav_fragment"
-        android:name="com.iti.myapplicationbnv.fragments.FavoriteFragment"
-        android:label="Favorite"/>
+        android:name="com.iti.myapplicationbnv.presentation.recipe.favorite.FavoriteFragment"
+        android:label="Favorite">
+
+        <action
+            android:id="@+id/action_favFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
 
 
     <fragment
         android:id="@+id/recipeDetailFragment"
-        android:name="com.iti.myapplicationbnv.RecipeDetailFragment"
+        android:name="com.iti.myapplicationbnv.presentation.recipe.details.RecipeDetailFragment"
         android:label="Recipe Detail" >
 
         <argument
-        android:name="mealName"
-        app:argType="string" />
+            android:name="mealId"
+            app:argType="string" />
+
+        <argument
+            android:name="mealName"
+            app:argType="string" />
+
         <argument
             android:name="mealImageUrl"
             app:argType="string" />
+
         <argument
             android:name="mealInstructions"
             app:argType="string" />
+
+        <argument
+            android:name="mealIngredients"
+            app:argType="string"
+            android:defaultValue="" />
+
+
+        <argument
+            android:name="mealYoutubeUrl"
+            app:argType="string"
+            android:defaultValue="" />
+
     </fragment>
 
     <fragment
         android:id="@+id/about_fragment"
-        android:name="com.iti.myapplicationbnv.fragments.AboutCreatorFragment"
+        android:name="com.iti.myapplicationbnv.presentation.more.AboutCreatorFragment"
         android:label="About"/>
 
 

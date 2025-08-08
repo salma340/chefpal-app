@@ -8,7 +8,7 @@ import com.iti.myapplicationbnv.data.data.local.FavoriteMeal
 import com.iti.myapplicationbnv.data.data.local.FavoriteMealDao
 import com.iti.myapplicationbnv.data.data.local.UserEntity
 
-@Database(entities = [UserEntity::class, FavoriteMeal::class], version = 3)
+@Database(entities = [UserEntity::class, FavoriteMeal::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

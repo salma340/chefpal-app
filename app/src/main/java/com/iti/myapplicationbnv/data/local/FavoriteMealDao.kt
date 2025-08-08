@@ -16,5 +16,10 @@ interface FavoriteMealDao {
 
 
     @Query("SELECT * FROM favorite_meals WHERE id = :mealId")
-    suspend fun getMealById(mealId: String): FavoriteMeal?
+    suspend fun getMealByIdSuspend(mealId: String): FavoriteMeal?
+
+
+    @Query("SELECT * FROM favorite_meals WHERE id = :mealId")
+    fun getMealById(mealId: String): LiveData<FavoriteMeal?>
+
 }

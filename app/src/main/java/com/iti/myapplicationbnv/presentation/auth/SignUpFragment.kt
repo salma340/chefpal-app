@@ -1,4 +1,4 @@
-package com.iti.myapplicationbnv.fragments
+package com.iti.myapplicationbnv.presentation.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.iti.myapplicationbnv.R
-import com.iti.myapplicationbnv.activity.RecipeActivity
+import com.iti.myapplicationbnv.presentation.recipe.recipes.RecipeActivity
 import com.iti.myapplicationbnv.data.data.local.UserEntity
 import com.iti.myapplicationbnv.data.data.sharedpref.sharedpreferences
 import com.iti.myapplicationbnv.data.local.AppDatabase

@@ -1,4 +1,4 @@
-package com.iti.myapplicationbnv.adapter
+package com.iti.myapplicationbnv.presentation.recipe.recipes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.iti.myapplicationbnv.R
 import com.iti.myapplicationbnv.data.data.local.FavoriteMeal
 import com.iti.myapplicationbnv.data.data.local.FavoriteMealDao
-import com.iti.myapplicationbnv.data.data.local.Meal
+import com.iti.myapplicationbnv.data.remote.Meal
 import com.iti.myapplicationbnv.databinding.ItemMealBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,10 +43,27 @@ class MealAdapter(private var meals: List<Meal>, private val onItemClick: (Meal)
             CoroutineScope(Dispatchers.IO).launch {
                 if (meal.isFavorite) {
 
-                    dao.delete(FavoriteMeal(meal.id, meal.name, meal.imageUrl,meal.category))
+                    dao.delete(
+                        FavoriteMeal(
+                            meal.id,
+                            meal.name,
+                            meal.imageUrl,
+                            meal.category,
+                            meal.instructions,
+                        )
+                    )
                     meal.isFavorite = false
                 } else {
-                    dao.insert(FavoriteMeal(meal.id, meal.name, meal.imageUrl,meal.category))
+                    dao.insert(
+                        FavoriteMeal(
+                            meal.id,
+                            meal.name,
+                            meal.imageUrl,
+                            meal.category,
+                            meal.instructions,
+
+                        )
+                    )
                     meal.isFavorite = true
                 }
 
@@ -66,4 +83,13 @@ class MealAdapter(private var meals: List<Meal>, private val onItemClick: (Meal)
         meals = newMeals
         notifyDataSetChanged()
     }
+
+    fun updateFavorites(favIds: List<String>) {
+        meals.forEach { meal ->
+            meal.isFavorite = favIds.contains(meal.id)
+        }
+        notifyDataSetChanged()
+    }
+
+
 }

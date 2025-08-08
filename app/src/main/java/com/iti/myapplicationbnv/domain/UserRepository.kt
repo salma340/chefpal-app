@@ -1,5 +1,6 @@
-package com.iti.myapplicationbnv.data.data.local
+package com.iti.myapplicationbnv.domain
 
+import com.iti.myapplicationbnv.data.data.local.UserEntity
 import com.iti.myapplicationbnv.data.local.UserDao
 
 class UserRepository(private val userDao: UserDao) {

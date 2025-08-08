@@ -1,4 +1,4 @@
-package com.iti.myapplicationbnv.activity
+package com.iti.myapplicationbnv.presentation.recipe.recipes
 
 import android.os.Bundle
 import android.widget.Toast

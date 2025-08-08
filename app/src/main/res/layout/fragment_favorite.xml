@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fav_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:orientation="vertical"
     android:padding="16dp">
-
-
-
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:paddingBottom="80dp"
         android:clipToPadding="false"
-        android:layout_marginTop="80dp"
-        />
+        android:layout_marginTop="80dp" />
 
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_no_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Favorite Items"
+        android:fontFamily="@font/oswald_regular"
+        android:textSize="18sp"
+        android:textColor="@color/gray"
+        android:visibility="gone"
+        android:layout_gravity="center" />
+
+</FrameLayout>
