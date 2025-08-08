@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My ApplicationBNV</string>
+    <string name="app_name">ChefPal</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="logout">Logout</string>
     <string name="settings">Settings</string>
-    <string name="about">About</string>
     <string name="menu_slideshow">slide show</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
@@ -14,11 +13,14 @@
     <string name="nav_header_desc">description</string>
     <string name="nav_header_title">header title</string>
     <string name="nav_header_subtitle">header subtitle</string>
-    <string name="team_a">Team A</string>
-    <string name="plus_one">+ 1</string>
-    <string name="plus_two">+ 2</string>
-    <string name="team_b">Team B</string>
-    <string name="reset">Reset</string>
+    <string name="meal_image">Meal Image</string>
+    <string name="about">Salma Ahmed Shaker – Mobile App Developer and technology enthusiast.
+Currently a student at the Faculty of Computers and Informatics, Zagazig University (2023–2027), with experience in building Android and Flutter applications.
+This Recipe App was created to make discovering, saving, and cooking delicious meals easier for everyone.
+Passionate about combining clean code with beautiful design to create a smooth cooking experience for users.
+</string>
+    <string name="tv_login_text">Don’t have an account? <u>SignUp</u></string>
+    <string name="tv_signup_text">Already have an account? <u>LogIn</u></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

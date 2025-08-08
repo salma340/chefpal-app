@@ -49,7 +49,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/orange"/>
+            android:textColor="@color/orange"
+            android:id="@+id/emailEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -86,11 +87,12 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/orange"/>
+            android:textColor="@color/orange"
+            android:id="@+id/passwordEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signup_button"
+        android:id="@+id/login_button"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:background="@drawable/rounded_button"
@@ -112,7 +114,7 @@
         android:textSize="14sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="1dp"
-        android:text="Don”t have an account? SignUp"
+        android:text="@string/tv_login_text"
         android:fontFamily="@font/oswald_regular"/>
 
 

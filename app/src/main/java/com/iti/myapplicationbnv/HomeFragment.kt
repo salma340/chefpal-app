@@ -1,0 +1,152 @@
+package com.iti.myapplicationbnv
+
+import android.content.Intent
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.iti.myapplicationbnv.data.data.local.FavoriteMealDao
+import com.iti.myapplicationbnv.data.local.AppDatabase
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import androidx.core.view.MenuProvider
+import com.iti.myapplicationbnv.activity.AuthActivity
+import com.iti.myapplicationbnv.adapter.MealAdapter
+import com.iti.myapplicationbnv.api.ApiClient
+import com.iti.myapplicationbnv.api.MealResponse
+import com.iti.myapplicationbnv.data.data.sharedpref.sharedpreferences
+
+
+class HomeFragment : Fragment() {
+
+    private lateinit var mealAdapter: MealAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var searchBar: EditText
+    private lateinit var dao: FavoriteMealDao
+    private var lastQuery: String = ""
+    private var favoriteIds: List<String> = emptyList()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        recyclerView = view.findViewById(R.id.mealRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        searchBar = view.findViewById(R.id.search_bar)
+
+        val db = AppDatabase.getInstance(requireContext())
+        dao = db.favoriteMealDao()
+
+        mealAdapter = MealAdapter(emptyList(), onItemClick = { meal ->
+            val action = HomeFragmentDirections
+                .actionHomeFragmentToRecipeDetailFragment(
+                    mealName = meal.name,
+                    mealImageUrl = meal.imageUrl,
+                    mealInstructions = meal.instructions
+                )
+            findNavController().navigate(action)
+        }, dao = dao)
+
+        recyclerView.adapter = mealAdapter
+
+
+        dao.getAll().observe(viewLifecycleOwner) { favoriteMeals ->
+            favoriteIds = favoriteMeals.map { it.id }
+            fetchMeals(lastQuery)
+        }
+
+
+        searchBar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                lastQuery = s.toString()
+                fetchMeals(lastQuery)
+            }
+        })
+
+
+        fetchMeals("")
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Home"
+
+        val menuHost = requireActivity() as MenuHost
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.home_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.menu_sign_out -> {
+                        val shared = sharedpreferences(requireContext())
+                        shared.logout()
+                        val intent = Intent(requireContext(), AuthActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        intent.putExtra("openLoginDirect", true)
+                        startActivity(intent)
+
+                        true
+                    }
+
+                    R.id.menu_about_creator -> {
+                        findNavController().navigate(R.id.action_homeFragment_to_aboutCreatorFragment)
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
+        }, viewLifecycleOwner)
+    }
+
+
+
+    private fun fetchMeals(query: String) {
+        ApiClient.apiService.searchMeals(query)
+            .enqueue(object : Callback<MealResponse> {
+                override fun onResponse(
+                    call: Call<MealResponse>,
+                    response: Response<MealResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val meals = response.body()?.meals ?: emptyList()
+
+                        meals.forEach { meal ->
+                            meal.isFavorite = favoriteIds.contains(meal.id)
+                        }
+                        mealAdapter.updateData(meals)
+                    }
+                }
+
+                override fun onFailure(call: Call<MealResponse>, t: Throwable) {
+                    Toast.makeText(context, "Failed to load meals", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+}

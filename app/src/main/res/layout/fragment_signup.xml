@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/signup_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="16dp">
+
+    <LinearLayout
+    android:id="@+id/signup_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/background"
     android:padding="16dp">
@@ -49,7 +55,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/orange" />
+            android:textColor="@color/orange"
+            android:id="@+id/usernameEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -83,7 +90,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/orange"/>
+            android:textColor="@color/orange"
+            android:id="@+id/emailEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -120,7 +128,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/orange"/>
+            android:textColor="@color/orange"
+            android:id="@+id/passwordEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -156,7 +165,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/orange"/>
+            android:textColor="@color/orange"
+            android:id="@+id/confirmPasswordEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -182,8 +192,9 @@
         android:textSize="14sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="1dp"
-        android:text="Already have an account? Login"
+        android:text="@string/tv_signup_text"
         android:fontFamily="@font/oswald_regular"/>
 
 
 </LinearLayout>
+    </ScrollView>

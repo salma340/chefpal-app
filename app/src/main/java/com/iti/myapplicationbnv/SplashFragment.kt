@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
-import android.animation.ValueAnimator
+import com.airbnb.lottie.LottieAnimationView
+import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import androidx.core.os.postDelayed
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.iti.myapplicationbnv.activity.RecipeActivity
+import com.iti.myapplicationbnv.data.data.sharedpref.sharedpreferences
 import com.iti.myapplicationbnv.databinding.FragmentSpalshBinding
 
 
@@ -19,7 +19,7 @@ import com.iti.myapplicationbnv.databinding.FragmentSpalshBinding
 class SplashFragment : Fragment() {
 
     private var binding: FragmentSpalshBinding?= null
-    private val bind get() = binding!!
+    private val binds get() = binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,16 +32,34 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        animateDots()
+        val shared = sharedpreferences(requireContext())
+
+
+
         Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(R.id.register_fragment)
+            if (shared.isLoggedIn()) {
+                val intent = Intent(requireContext(), RecipeActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            } else if (shared.isFirstTime()) {
+                shared.setFirstTime(false)
+                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+            } else {
+                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+            }
         }, 3000)
+
+
+
+
     }
 
-    private fun animateDots(){
+
+
+    /*private fun animateDots(){
 
         val scaleUp1 = ObjectAnimator.ofPropertyValuesHolder(
-            bind.dot1,
+            binds.dot1,
             PropertyValuesHolder.ofFloat(View.SCALE_X, 1.5f),
             PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.5f)
         ).apply {
@@ -52,12 +70,12 @@ class SplashFragment : Fragment() {
         }
 
         val scaleUp2 = scaleUp1.clone().apply {
-            setTarget(bind.dot2)
+            setTarget(binds.dot2)
             startDelay = 150
         }
 
         val scaleUp3 = scaleUp1.clone().apply {
-            setTarget(bind.dot3)
+            setTarget(binds.dot3)
             startDelay = 300
         }
 
@@ -65,7 +83,7 @@ class SplashFragment : Fragment() {
         scaleUp2.start()
         scaleUp3.start()
     }
-
+*/
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
