@@ -2,6 +2,7 @@
 ChefPal is an Android application designed to help users find, organize, and manage their favorite recipes. Whether you're looking for new meal ideas, planning your next dish, or simply want to keep track of your favorites, ChefPal makes it easy and convenient.
 
 Features
+
 Register and Login
 Secure user authentication.
 
