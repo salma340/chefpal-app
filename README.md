@@ -48,6 +48,7 @@ Instructions: Step-by-step cooking instructions.
 YouTube Video: Embedded video for additional guidance.
 
 Technologies Used
+
 Kotlin – Primary programming language.
 
 MVVM Architecture – Clean architecture pattern.
